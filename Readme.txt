@@ -23,7 +23,6 @@ PayPal Currency Converter BASIC for WooCommerce installs like any WordPress plug
 MANDATORY SETTINGS:
 1. Find the settings page in WooCommerce's sub menu.
 2. First time only: Select your target Currency
-3. Optionally register a valid API ID and activate it with the radio button or use Yahoo Finance, or European Central Bank as your exchange rate provider
 3. Save settings to invoke the exchange rate retrival.
 4. Accept the suggested exchange rate shown in the button.
 5. Save settings again.

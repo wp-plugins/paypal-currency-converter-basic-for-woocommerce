@@ -1,0 +1,1 @@
+<?php$file = file_get_contents($_GET['requrl']);$left=strpos($file,'<div id=currency_converter_result>');$right=strlen($file)-strpos($file,'<input type=hidden name=meta');$snip= substr($file,$left,$right);echo $snip;?>

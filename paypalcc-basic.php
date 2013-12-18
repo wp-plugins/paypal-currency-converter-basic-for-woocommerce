@@ -157,7 +157,7 @@ class ppcc {
         
         echo '<div class="wrap">
 			<div id="icon-options-general" class="icon32"></div>
-            <h2>'. __('PayPal Currency Converter PRO Settings','PPAC').'</h2>
+            <h2>'. __('PayPal Currency Converter BASIC Settings','PPAC').'</h2>
             <form method="post" action="options.php">';
         settings_fields('ppcc_options');
 		($options['api_selection']=="oer_api_id"?$oer_api_checked='checked="checked"': $oer_api_checked='');

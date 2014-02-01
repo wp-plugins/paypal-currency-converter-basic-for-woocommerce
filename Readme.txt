@@ -51,8 +51,8 @@ Tax conversion is supported in the PRO version of this plugin on codecanyon.net 
 
 == Screenshots ==
 
-1. Settings: '/assets/settings.jpg'
-2. Menu location: '/assets/menu-location.jpg'
+1. Menu location
+2. Settings Admin Backend
 
 == Changelog ==
 

@@ -49,6 +49,14 @@ Find the PRO version of this plugin on codecanyon.net http://codecanyon.net/item
 
 Tax conversion is supported in the PRO version of this plugin on codecanyon.net http://codecanyon.net/item/paypal-currency-converter-pro-for-woocommerce/6343249
 
+= How can i show the conversion rate on the checkout page? =
+You can set the PayPal Description in such a way to show the conversion rate in the payment description.
+Simply add "{}" into the description at your desired place and it will be replaced by the current conversion rate and currency pairing.
+Example Description:
+<img id="logo" alt="Intelligent IT" src="http://intelligent-it.asia/iit/wp-content/uploads/2013/07/favicon.ico">Thank you for choosing Intelligent IT  for your IT needs</img>.
+Pay via PayPal; you can pay with your credit card if you don&#039;t have a PayPal account.
+<strong>The order total will be converted from KRW into USD with the current exchange rate of {0.0971USD/ZAR}</strong>
+
 == Screenshots ==
 
 1. Menu location

@@ -2,7 +2,7 @@
 /* Plugin Name: PayPal Currency Converter BASIC for WooCommerce
  * Plugin URI: http://www.intelligent-it.asia
  * Description: Convert any currency to allowed PayPal currencies for PayPal's Payment Gateway within WooCommerce
- * Version: 1.0
+ * Version: 1.1
  * Author: Intelligent-IT.asia
  * Author URI: http://www.intelligent-it.asia
  * @author Henry Krupp <henry.krupp@gmail.com> 
@@ -124,12 +124,12 @@ class ppcc {
 		if ($_GET['page']=='ppcc_options'){
 			$exrdata = get_exchangerate(get_woocommerce_currency(),$options['target_currency']);
 
-			wp_register_script( 'ppcc_script', plugins_url().'/paypal-currency-converter-basic-for-woocommerce/assets/js/ppcc_script.js','woocommerce.min.js', '1.0', true);//pass variables to javascript
+			wp_register_script( 'ppcc_script', plugins_url( '/assets/js/ppcc_script.js', __FILE__ ),'woocommerce.min.js', '1.0', true);//pass variables to javascript
 			wp_register_script( 'woocommerce_admin', $woocommerce->plugin_url() . '/assets/js/admin/woocommerce_admin' . $suffix . '.js', array( 'jquery', 'jquery-tiptip'), $woocommerce->version );
 			wp_enqueue_style( 'woocommerce_admin_styles', $woocommerce->plugin_url() . '/assets/css/admin.css' );
 
 			$data = array(	
-			'plugin_url' => plugins_url(),
+							'proxy' => plugins_url( 'proxy.php', __FILE__ ),
 							'source_currency' => get_woocommerce_currency(),
 							'target_currency' => $options['target_currency'],
 							'amount'=>$exrdata,
@@ -139,6 +139,8 @@ class ppcc {
 			wp_localize_script('ppcc_script', 'php_data', $data);
 			wp_enqueue_script('ppcc_script');
 			wp_enqueue_script( 'woocommerce_admin' );
+			
+			update_paypal_description();
 		}
 
 		$currency_selector='<select id="target_cur" name="'.$this->option_name.'[target_currency]">';
@@ -156,8 +158,7 @@ class ppcc {
 
         
         echo '<div class="wrap">
-			<div id="icon-options-general" class="icon32"></div>
-            <h2>'. __('PayPal Currency Converter BASIC Settings','PPAC').'</h2>
+            <h2><div class="dashicons dashicons-admin-generic"></div>'. __('PayPal Currency Converter BASIC Settings','PPAC').'</h2>
             <form method="post" action="options.php">';
         settings_fields('ppcc_options');
 		($options['api_selection']=="oer_api_id"?$oer_api_checked='checked="checked"': $oer_api_checked='');
@@ -213,8 +214,7 @@ class ppcc {
 				</tbody>
 				</table>
 				<hr>				
-				<img class="icon32" src="'.plugins_url().'/paypal-currency-converter-basic-for-woocommerce/assets/images/exr-icon.png"  />
-				<h2>'. __('Currency Exchange Rate Data Provider','PPAC').'</h2>
+				<h2><div class="dashicons dashicons-list-view"></div>'. __('Currency Exchange Rate Data Provider','PPAC').'</h2>
 				NO guarantees are given whatsoever of accuracy, validity, availability, or fitness for any purpose - please use at your own risk.
 				<table class="form-table">
 				<tbody>					
@@ -231,14 +231,19 @@ class ppcc {
 				</table>
 				<hr>
 				<tbody>
-					<tr valign="top">
+					<tr valign="middle">
 						<th scope="row" class="titledesc">
 							<input type="submit" class="button-primary" value="'. __('Save Changes') .'" />
 						</th>
 						<td class="forminp" align="right">
 							<a href="http://intelligent-it.asia">
-								<img class="help_tip" data-tip="'. __('PayPal Currency Converter PRO Plugin was brought to you by intelligent-it.asia.','PPAC').'" src="'.plugins_url().'/paypal-currency-converter-basic-for-woocommerce/assets/images/intelligent-it-logo.png" />
-							</a>
+								<img class="help_tip" data-tip="'. __('PayPal Currency Converter PRO Plugin was brought to you by intelligent-it.asia.','PPAC').'" src="'.plugins_url('/assets/images/intelligent-it-logo.png',__file__).'" />
+							</a> 
+						</td>
+						<td align="right">
+							<a href="http://codecanyon.net/item/paypal-currency-converter-pro-for-woocommerce/6343249">
+								<img src="'.plugins_url( '/assets/images/PPCC-PRO-icon-36x36.png',__file__).'" />
+							</a> 
 						</td>
 					</tr>					
 				</tbody>
@@ -247,8 +252,11 @@ class ppcc {
 			<h2>Buy <a href="http://codecanyon.net/item/paypal-currency-converter-pro-for-woocommerce/6343249" title="PAYPAL CURRENCY CONVERTER PRO FOR WOOCOMMERCE" >PAYPAL CURRENCY CONVERTER PRO FOR WOOCOMMERCE</a> plugin and benefit of its additional features such as:</h2>
 			<ul style="list-style-type:circle;border-left-width: 13px;margin-left: 19px;">
 				<li>Convert any given WooCommerce shop currency to allowed PayPal currencies for PayPal\'s Payment Gateway within WooCommerce on checkout.</li>
+				<li>Converts Shopping cart total.</li>
+				<li>Converts Tax.</li>
+				<li>Converts shipping costs.</li>
 				<li>Actual Currency Exchange Rates will be retrieved from "Open Exchange Rates API", YAHOO Finance, or European Central Bank.</li>
-				<li>automatic currency exchange rate updates, choose among three different currency exchange rate provider,</li>
+				<li>Automatic currency exchange rate updates, choose among three different currency exchange rate provider,</li>
 				<li>5 digits accuracy</li>				<li>Also integrated are Google\'s exchange rates history chart of the last 5 years and "The Money Converter Rate Ticker".</li>
 				<li>Have your virtual product orders automatically completed after checkout!</li>
 				<li>Show the current conversion rate in PayPal\'s payment gateway description</li>
@@ -308,6 +316,22 @@ class ppcc {
 
 }
 
+//print the currency inside the description of PayPal payment Method using {...} enclosings*
+function update_paypal_description(){
+			global $woocommerce;
+			$options = get_option('ppcc-options');
+			
+			$paypayl_options = get_option('woocommerce_paypal_settings');
+			$ptn = "({.*})";
+			ereg($ptn, $paypayl_options['description'], $matches);
+			if (count($matches)>0){
+		
+				$replace_string='{' .$options['conversion_rate'].$options['target_currency'].'/'.get_woocommerce_currency().'}';
+				$paypayl_options['description'] = ereg_replace($ptn, $replace_string, $paypayl_options['description']);
+
+			}
+			update_option( 'woocommerce_paypal_settings', $paypayl_options );
+}
 
 //retrieve EX data from the api
 function get_exchangerate($from,$to) {

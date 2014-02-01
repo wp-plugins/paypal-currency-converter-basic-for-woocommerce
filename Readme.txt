@@ -3,8 +3,8 @@ Contributors: henry-krupp
 Donate link: http://intelligent-it.asia/product/paypal-currency-converter/
 Tags: woocommerce, paypal, currency conversion, exchange rate
 Requires at least: 3.0.1
-Tested up to: 3.8
-Stable tag: 1.0
+Tested up to: 3.8.1
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,11 +53,22 @@ Tax conversion is supported in the PRO version of this plugin on codecanyon.net 
 
 1. Menu location
 2. Settings Admin Backend
+3. Conversion rate in PayPal description on checkout
+4. PayPal pay page
 
 == Changelog ==
 
 = 1.0 =
 * Initial version
+= 1.1 =
+* New DashIcons as of WordPress 3.8
+* Show the current conversion rate in PayPal's payment gateway description.
+You can set the PayPal Description in such a way to show the conversion rate in the payment description.
+Simply add "{}" into the description at your desired place and it will be replaced by the current conversion rate and currency pairing:
+Example Description:
+<img id="logo" alt="Intelligent IT" src="http://intelligent-it.asia/iit/wp-content/uploads/2013/07/favicon.ico">Thank you for choosing Intelligent IT  for your IT needs</img>.
+Pay via PayPal; you can pay with your credit card if you don&#039;t have a PayPal account.
+<strong>The order total will be converted from KRW into USD with the current exchange rate of {0.0971USD/ZAR}</strong>
 
 == Upgrade Notice ==
 

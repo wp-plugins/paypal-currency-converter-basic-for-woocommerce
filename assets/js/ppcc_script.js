@@ -12,7 +12,6 @@ jQuery(document).ready(function() {
 	}else{
 		jQuery('#cr').css('color', 'red');
 		jQuery( ".settings-error" ).show();
-		//alert ('please check your current currency setting!');
 	}
 });
 jQuery(function(){
@@ -52,7 +51,7 @@ function oc_currency(){
 }
 
 function get_ajax(my_target){
-		var answer = jQuery.get(php_data.plugin_url+"/paypal-currency-converter-basic-for-woocommerce/proxy.php",{ requrl: php_data.requrl},
+		var answer = jQuery.get(php_data.proxy,{ requrl: php_data.requrl},
 			function(data) {
 				jQuery(my_target).html(data);
 				jQuery('#selected_currency').val(currency()+' '+php_data.target_currency+'/'+php_data.source_currency);
@@ -61,8 +60,6 @@ function get_ajax(my_target){
 				}else{
 					jQuery('#cr').css('color', 'red');
 					jQuery( ".settings-error" ).show();
-					//alert ('please check your current currency setting!');
-
 				}
 			}
 		);

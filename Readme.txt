@@ -30,9 +30,6 @@ When the currently saved currency exchange rate is equal with the actual currenc
 A difference between the saved currency exchange rate and the actual is indicated by red colored value and through warning message.
 
 
-To your success...
-November 30th, 2013
-
 Heinrich Krupp
 intelligent-it.asia
 
@@ -47,7 +44,13 @@ Find the PRO version of this plugin on codecanyon.net http://codecanyon.net/item
 = How can I have 5 digits accuracy? =
 
 Find the PRO version of this plugin on codecanyon.net http://codecanyon.net/item/paypal-currency-converter-pro-for-woocommerce/6343249
-== Screenshots ==
+= How can I have 5 digits accuracy? =
+
+Find the PRO version of this plugin on codecanyon.net http://codecanyon.net/item/paypal-currency-converter-pro-for-woocommerce/6343249
+
+= How can the TAX be converted? =
+
+Tax conversion is supported in the PRO version of this plugin on codecanyon.net http://codecanyon.net/item/paypal-currency-converter-pro-for-woocommerce/6343249
 
 == Screenshots ==
 

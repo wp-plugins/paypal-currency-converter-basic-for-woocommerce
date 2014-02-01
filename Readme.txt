@@ -44,9 +44,6 @@ Find the PRO version of this plugin on codecanyon.net http://codecanyon.net/item
 = How can I have 5 digits accuracy? =
 
 Find the PRO version of this plugin on codecanyon.net http://codecanyon.net/item/paypal-currency-converter-pro-for-woocommerce/6343249
-= How can I have 5 digits accuracy? =
-
-Find the PRO version of this plugin on codecanyon.net http://codecanyon.net/item/paypal-currency-converter-pro-for-woocommerce/6343249
 
 = How can the TAX be converted? =
 
@@ -54,8 +51,8 @@ Tax conversion is supported in the PRO version of this plugin on codecanyon.net 
 
 == Screenshots ==
 
-1. Settings: settings.jpeg
-2. Menu location: menu-location.jpeg
+1. Settings: '/assets/settings.jpeg'
+2. Menu location: '/assets/menu-location.jpeg'
 
 == Changelog ==
 

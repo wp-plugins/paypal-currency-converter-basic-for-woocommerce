@@ -23,7 +23,7 @@ PayPal Currency Converter BASIC for WooCommerce installs like any WordPress plug
 MANDATORY SETTINGS:
 1. Find the settings page in WooCommerce's sub menu.
 2. First time only: Select your target Currency
-3. Save settings to invoke the exchange rate retrival.
+3. Save settings to invoke the exchange rate retrieval.
 4. Accept the suggested exchange rate shown in the button.
 5. Save settings again.
 When the currently saved currency exchange rate is equal with the actual currency exchange rate the value is indicated by green font color.
@@ -49,7 +49,7 @@ Find the PRO version of this plugin on codecanyon.net http://codecanyon.net/item
 
 Tax conversion is supported in the PRO version of this plugin on codecanyon.net http://codecanyon.net/item/paypal-currency-converter-pro-for-woocommerce/6343249
 
-= How can i show the conversion rate on the checkout page? =
+= How can I show the conversion rate on the checkout page? =
 You can set the PayPal Description in such a way to show the conversion rate in the payment description.
 Simply add "{}" into the description at your desired place and it will be replaced by the current conversion rate and currency pairing.
 Example Description:
@@ -69,16 +69,22 @@ Pay via PayPal; you can pay with your credit card if you don&#039;t have a PayPa
 = 1.0 =
 * Initial version
 = 1.1 =
-* New DashIcons as of WordPress 3.8
+* New Dash-Icons as of WordPress 3.8
 * Show the current conversion rate in PayPal's payment gateway description.
 You can set the PayPal Description in such a way to show the conversion rate in the payment description.
-Simply add "{}" into the description at your desired place and it will be replaced by the current conversion rate and currency pairing:
+**Simply add "{}" into the description at your desired place and it will be replaced by the current conversion rate and currency pairing.**
+
 Example Description:
-<img id="logo" alt="Intelligent IT" src="http://intelligent-it.asia/iit/wp-content/uploads/2013/07/favicon.ico">Thank you for choosing Intelligent IT  for your IT needs</img>.
+
+Thank you for choosing *XYZ* for your *xyz* needs.
 Pay via PayPal; you can pay with your credit card if you don&#039;t have a PayPal account.
-<strong>The order total will be converted from KRW into USD with the current exchange rate of {0.0971USD/ZAR}</strong>
+The order total will be converted from KRW into USD with the current exchange rate of **{0.0971USD/ZAR}**
 
 == Upgrade Notice ==
 
 = 1.0 =
-Allow your customers to pay any shop currency with PayPal
+* Allow your customers to pay any shop currency with PayPal
+
+= 1.1 =
+* Backend layout adjusted to new Dash-Icons as of WordPress 3.8
+* Show the current conversion rate in PayPal's payment gateway description.

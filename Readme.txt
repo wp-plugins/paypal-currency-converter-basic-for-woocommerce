@@ -80,6 +80,11 @@ Thank you for choosing *XYZ* for your *xyz* needs.
 Pay via PayPal; you can pay with your credit card if you don&#039;t have a PayPal account.
 The order total will be converted from KRW into USD with the current exchange rate of **{0.0971USD/ZAR}**
 
+= 1.2 =
+* Code clean up
+* Some Layout change
+* Additional information
+
 == Upgrade Notice ==
 
 = 1.0 =
@@ -88,3 +93,8 @@ The order total will be converted from KRW into USD with the current exchange ra
 = 1.1 =
 * Backend layout adjusted to new Dash-Icons as of WordPress 3.8
 * Show the current conversion rate in PayPal's payment gateway description.
+
+= 1.2 =
+* Code clean up
+* Some Layout change
+* Additional information

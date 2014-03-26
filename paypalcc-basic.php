@@ -244,6 +244,14 @@ class ppcc {
 							<a href="http://intelligent-it.asia" title="intelligent-it.asia"><img alt="'. __('PayPal Currency Converter BASIC plugin was brought to you by intelligent-it.asia.','PPCC-PRO').'" src="'.plugins_url('assets/images/intelligent-it-logo.png',__file__).'" /></a></br>
 							The IT you deserve.
 						</td>
+						<td align="right">
+						<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+							<input type="hidden" name="cmd" value="_s-xclick">
+							<input type="hidden" name="hosted_button_id" value="9D95P85RYDN56">
+							<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+							<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+						</form>
+						</td>
 					</tr>
 				</tbody>
 				</table>

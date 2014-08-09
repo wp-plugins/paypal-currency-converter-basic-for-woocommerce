@@ -257,25 +257,27 @@ class ppcc {
 				</table>
 			<h2>Buy <a href="http://codecanyon.net/item/paypal-currency-converter-pro-for-woocommerce/6343249" title="PAYPAL CURRENCY CONVERTER PRO FOR WOOCOMMERCE" >PAYPAL CURRENCY CONVERTER PRO FOR WOOCOMMERCE</a> plugin and benefit of its additional features such as:</h2>
 			<ul style="list-style-type:circle;border-left-width: 13px;margin-left: 19px;">
-				<li>Convert any given WooCommerce shop currency to allowed PayPal currencies for PayPal\'s Payment Gateway within WooCommerce on checkout.</li>
+				<li>Convert any given WooCommerce shop currency to allowed PayPal currencies for PayPal’s Payment Gateway within WooCommerce on checkout.</li>
+				<li>Supports upcoming and customized version of <a href="http://www.woothemes.com/products/paypal-digital-goods-gateway/">PayPal Digital Goods gateway</a></li>
+				<li>Supports customized version of <a href="https://wordpress.org/plugins/deals-engine/">Social Deals Engine</a></li>
 				<li>Converts Shopping cart total.</li>
-				<li>Converts Tax.</li>
-				<li>Converts shipping costs.</li>
-				<li>Set your 	Custom Currency.</li>
-				<li>Actual Currency Exchange Rates will be retrieved from "Open Exchange Rates API", YAHOO Finance, or European Central Bank.</li>
-				<li>Automatic currency exchange rate updates, choose among three different currency exchange rate provider,</li>
-				<li>5 digits accuracy</li>				<li>Also integrated are Google\'s exchange rates history chart of the last 5 years and "The Money Converter Rate Ticker".</li>
-				<li>Have your virtual product orders automatically completed after checkout!</li>
-				<li>Show the current conversion rate in PayPal\'s payment gateway description</li>
+				<li>Converts Tax</li>
+				<li>Converts shipping costs</li>
+				<li>Custom Currency</li>
+				<li>Show the total, the tax, and current conversion rate in PayPal related payment gateways descriptions</li>
 				<li>Automatically update the currency exchange rate between your shop currency and the desired PayPal currency with WP-crontrol (or any other cron plugin), your hosting servers cron job, or a 3rd party cron job service.</li>
-				<li>Sends notification email to the admin\'s email address when the exchange rate has been updated.</li>
+				<li>Actual Currency Exchange Rates will be retrieved from “Open Exchange Rates API”, YAHOO Finance, or European Central Bank.</li>
+				<li>Google’s exchange rates history chart of the last 5 years.</li>
+				<li>Have your virtual product orders automatically completed after checkout!</li>
+				<li>Have your non virtual product orders automatically processed after checkout!</li>
+				<li>Sends notification email to the admin’s email address when the exchange rate has been updated.</li>
 				<li>Logs the actions into a log file.</li>
 				<li>Tool-tip help on every item.</li>
 				<li>Translation Ready</li>
 				<li>Easy to Setup</li>
 				<li>Works on Woocommerce 2.0.x+</li>
 				<li>Detailed Documentation Included</li>
-			</ul>			
+			</ul>
 		</div>';
 				
     }

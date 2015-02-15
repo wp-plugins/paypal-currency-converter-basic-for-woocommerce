@@ -3,7 +3,7 @@ Contributors: henry-krupp
 Donate link: http://intelligent-it.asia/product/paypal-currency-converter/
 Tags: woocommerce, paypal, currency conversion, exchange rate
 Requires at least: 3.0.1
-Tested up to: 3.9.2
+Tested up to: 4.1
 Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -85,6 +85,10 @@ The order total will be converted from KRW into USD with the current exchange ra
 * Some Layout change
 * Additional information
 
+= 1.3 =
+* trial version
+* Tested with WooCommerce 2.3.2 
+
 == Upgrade Notice ==
 
 = 1.0 =
@@ -98,3 +102,8 @@ The order total will be converted from KRW into USD with the current exchange ra
 * Code clean up
 * Some Layout change
 * Additional information
+
+
+= 1.3 =
+* trial version
+* Tested with WooCommerce 2.3.2 

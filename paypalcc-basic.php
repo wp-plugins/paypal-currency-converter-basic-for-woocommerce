@@ -1,12 +1,12 @@
 <?php
-/* Plugin Name: PayPal Currency Converter BASIC for WooCommerce
+/* Plugin Name: PayPal Currency Converter BASIC(trial) for WooCommerce
  * Plugin URI: http://www.intelligent-it.asia
  * Description: Convert any currency to allowed PayPal currencies for PayPal's Payment Gateway within WooCommerce
- * Version: 1.2
+ * Version: 1.3
  * Author: Intelligent-IT.asia
  * Author URI: http://www.intelligent-it.asia
  * @author Henry Krupp <henry.krupp@gmail.com> 
- * @copyright 2013 Intelligent IT 
+ * @copyright 2015 Intelligent IT 
  * @license GNU General Public License v2
  */
  
@@ -33,6 +33,8 @@ class ppcc {
         'conversion_rate' => '1.0',
 		'auto_update' => 'on',
 		'api_selection' => 'yahoo',
+		'transactions' => 0,
+		'turnover' => 0,
     );
 
     public function __construct() {
@@ -51,34 +53,38 @@ class ppcc {
     }
 
     public function activate() {
-        update_option($this->option_name, $this->data);
+        //update_option($this->option_name, $this->data);
 		global $woocommerce;
 		$options = get_option('ppcc-options');
 		$exrdata = get_exchangerate(get_woocommerce_currency(),$options['target_currency']);
 		$options['conversion_rate'] = $exrdata;
-		$options['time_stamp']= current_time( 'timestamp' );
 		$options['retrieval_count'] = $options['retrieval_count'] + 1;
+		$options['transactions'] = 0;
+		$options['turnover'] = 0;
 		update_option( 'ppcc-options', $options );
     }
 
     public function deactivate() {
-        delete_option($this->option_name);
+        //delete_option($this->option_name);
     }
 	
     public function init() {
 
 		// add target Currency to Paypal and convert
-
-		add_filter( 'woocommerce_paypal_supported_currencies', 'add_new_paypal_valid_currency' );       
+		$options = get_option('ppcc-options');
+		if ($options[turnover]<100 and $options['transactions']<20){
+			add_filter( 'woocommerce_paypal_supported_currencies', 'add_new_paypal_valid_currency' );       
 			function add_new_paypal_valid_currency( $currencies ) { 
 				array_push ( $currencies , get_woocommerce_currency() );  
 				return $currencies;    
-			}   
+			}
+		}
 
 		add_filter('woocommerce_paypal_args', 'convert_currency');  
 			function convert_currency($paypal_args){ 
 				global $woocommerce;
 				$options = get_option('ppcc-options');
+
 				if ( $paypal_args['currency_code'] == get_woocommerce_currency()){  
 					$convert_rate = $options['conversion_rate']; //set the converting rate  
 					$paypal_args['currency_code'] = $options['target_currency']; 
@@ -87,16 +93,72 @@ class ppcc {
 					$decimals= (in_array($paypal_args['currency_code'], $nondecimalcurrencies))?0:2; //non decimal currencies
 					while (isset($paypal_args['amount_' . $i])) {  
 						$paypal_args['amount_' . $i] = round( $paypal_args['amount_' . $i] * $convert_rate, $decimals);  
+						$turnover = $turnover + $paypal_args['amount_' . $i];
 						++$i;  
 					}  
 					$discount = $paypal_args['discount_amount_cart'];
 					$paypal_args['discount_amount_cart'] = round($discount * $convert_rate, $decimals);
-				}  
+					$paypal_args['tax_cart'] = 0;
+				}
+				$options = get_option('ppcc-options');
+				$options['transactions'] = $options['transactions'] + 1;
+				$options['turnover'] =  round(($options['turnover'] + $turnover),2);
+				update_option( 'ppcc-options', $options );
 				return $paypal_args;  
 			}  
 	}
 
 	
+		//calculate the converted total and tax amount for the payment-gateway description
+	public function ppcc_converted_totals() {
+		global $woocommerce;
+		$options = get_option('ppcc-options');
+		$cart_contents_total = number_format( $woocommerce->cart->cart_contents_total * $options['conversion_rate'], 2, '.', '' )." ".$options['target_currency'];
+		$shipping_total = number_format( ($woocommerce->cart->shipping_total)*$options['conversion_rate'], 2, '.', '' )." ".$options['target_currency'];
+		//$tax = number_format(array_sum($woocommerce->cart->taxes)*$options['conversion_rate'], 2, '.', '' )." ".$options['target_currency'];
+		$cart_tax_total = number_format( ($woocommerce->cart->shipping_tax_total + array_sum($woocommerce->cart->taxes)) * $options['conversion_rate'], 2, '.', '' )." ".$options['target_currency'];
+		$shipping_tax_total = number_format(array_sum($woocommerce->cart->shipping_taxes)*$options['conversion_rate'], 2, '.', '' )." ".$options['target_currency'];
+
+		$order_total_exc_tax = number_format( ($woocommerce->cart->cart_contents_total + $woocommerce->cart->shipping_total)*$options['conversion_rate'], 2, '.', '' )." ".$options['target_currency'];
+		$order_total_inc_tax = number_format( ($woocommerce->cart->cart_contents_total + $woocommerce->cart->shipping_total + array_sum($woocommerce->cart->taxes) + $woocommerce->cart->shipping_tax_total)*$options['conversion_rate'], 2, '.', '' )." ".$options['target_currency'];
+		$tax_total = number_format( ( array_sum($woocommerce->cart->taxes) + $woocommerce->cart->shipping_tax_total)*$options['conversion_rate'], 2, '.', '' )." ".$options['target_currency'];
+		$tax_total = number_format( ( array_sum($woocommerce->cart->taxes) + $woocommerce->cart->shipping_tax_total)*$options['conversion_rate'], 2, '.', '' )." ".$options['target_currency'];
+
+
+		$cr = $options['conversion_rate']." ".$options['target_currency']."/".get_woocommerce_currency();
+
+		//print_r($woocommerce->cart);
+		print_r($woocommerce->order);
+		//echo '<div id="ppcc" style="display: none;">
+		echo '<div id="ppcc">
+				<span id="cart_total">'.$cart_contents_total.'</span>
+				<span id="cart_tax">'.$cart_tax_total.'</span>
+				<span id="shipping_total">'.$shipping_total.'</span>
+				<span id="shipping_tax_total">'.$shipping_tax_total.'</span>
+				<span id="total_order_exc_tax">'.$order_total_exc_tax.'</span>
+				<span id="tax_total">'.$tax_total.'</span>
+				<span id="total_order_inc_tax">'.$order_total_inc_tax.'</span>
+			</div>';
+			
+		wp_register_script( 'ppcc_checkout', plugins_url( '/assets/js/ppcc_checkout.js', __FILE__ ),'woocommerce.min.js', '1.0', true);//pass variables to javascript
+
+		//echo $total.$tax.$cr."....".$_POST['payment_method'];
+
+		$data = array(	
+						'cart_total' => $cart_contents_total,
+						'cart_tax' => $cart_tax_total,
+						'shipping_total' => $shipping_total,
+						'shipping_tax_total' => $shipping_tax_total,
+						'total_order_exc_tax' => $order_total_exc_tax,
+						'tax_total' => $order_total_exc_tax,
+						'total_order_inc_tax' => $order_total_inc_tax,
+						'cr'=>$cr,
+						);
+						
+		wp_localize_script('ppcc_checkout', 'php_data', $data);
+		wp_enqueue_script('ppcc_checkout');
+			
+	}
 	
     // White list our options using the Settings API
     public function admin_init() {
@@ -140,7 +202,7 @@ class ppcc {
 			update_paypal_description();
 		}
 
-		$currency_selector='<select id="target_cur" name="'.$this->option_name.'[target_currency]">';
+	$currency_selector='<select id="target_cur" name="'.$this->option_name.'[target_currency]">';
 		
 		foreach($this->pp_currencies as $key => $value)
 				{
@@ -155,13 +217,18 @@ class ppcc {
 
         
         echo '<div class="wrap">
-            <h2><div class="dashicons dashicons-admin-generic"></div>'. __('PayPal Currency Converter BASIC Settings','PPAC').'</h2>
+            <h2><div class="dashicons dashicons-admin-generic"></div>'. __('PayPal Currency Converter BASIC(trial) Settings','PPAC').'</h2>
             <form method="post" action="options.php">';
         settings_fields('ppcc_options');
 		($options['api_selection']=="oer_api_id"?$oer_api_checked='checked="checked"': $oer_api_checked='');
 		$yahoo_checked='checked="checked"';
 		($options['api_selection']=="ecb"?$ecb_checked='checked="checked"': $ecb_checked='');
 
+		if ($options[turnover]>=100 or $options['transactions']>=20){
+			echo '<div class="error" ><p>You have been sending a turnover of '.$options['turnover'].$options['target_currency'].' within '.$options['transactions'].' transactions to PayPal... Sorry, trial is over.
+			</br>About time to get <a href="http://codecanyon.net/item/paypal-currency-converter-pro-for-woocommerce/6343249" title="PAYPAL CURRENCY CONVERTER PRO FOR WOOCOMMERCE" >PAYPAL CURRENCY CONVERTER PRO FOR WOOCOMMERCE</a> plugin.</p></div>';
+			die;
+		}
 		echo '<div class="error settings-error" visibility="hidden"><p>Please check your current Currency Exchange Rate setting!</p></div>';
 
 		echo'   <table class="form-table">
@@ -191,12 +258,6 @@ class ppcc {
 						</td>
                     </tr>
 
-                    <tr valign="top">
-						<th class="titledesc" scope="row">'. __('The Money Converter Rate Ticker','PPAC').':</th>
-                        <td class="forminp">
-							<iframe id="tmc-ticker" style="height: 30px;width: 400px;" src="http://themoneyconverter.com/'.get_woocommerce_currency().'/RateTicker.aspx" scrolling="no" frameborder="0" marginwidth="0" marginheight="0"></iframe>
-						</td>
-                    </tr>
                     <tr valign="top">
 						<th class="titledesc" scope="row">
 							<label >'. __('Shop Conversion Rate','PPAC').': </label>
@@ -305,6 +366,8 @@ class ppcc {
 		$valid['oer_api_id'] = $input['oer_api_id'];
 		$valid['cur_api_id'] = $input['cur_api_id'];
 		$valid['api_selection'] = $input['api_selection'];
+		$valid['transactions'] = $input['transactions'];
+		$valid['turnover'] =  round($input['turnover'],2);
 		return $valid;
 	}
 
@@ -335,9 +398,7 @@ function update_paypal_description(){
 
 //retrieve EX data from the api
 function get_exchangerate($from,$to) {
-	//update the retrieval counter
 	$options = get_option('ppcc-options');
-	update_option( 'ppcc-options', $options );
 	
 	if ($options['api_selection']=="oer_api_id" and !isset($options['oer_api_id'])){
 			echo '<div class="error settings-error"><p>Please register an Open Exchange Rate API ID first!</p></div>';

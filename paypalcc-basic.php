@@ -2,7 +2,7 @@
 /* Plugin Name: PayPal Currency Converter BASIC(trial) for WooCommerce
  * Plugin URI: http://www.intelligent-it.asia
  * Description: Convert any currency to allowed PayPal currencies for PayPal's Payment Gateway within WooCommerce
- * Version: 1.3
+ * Version: 1.4
  * Author: Intelligent-IT.asia
  * Author URI: http://www.intelligent-it.asia
  * @author Henry Krupp <henry.krupp@gmail.com> 
@@ -188,11 +188,9 @@ class ppcc {
 			wp_enqueue_style( 'woocommerce_admin_styles', $woocommerce->plugin_url() . '/assets/css/admin.css' );
 
 			$data = array(	
-							'proxy' => plugins_url( 'proxy.php', __FILE__ ),
 							'source_currency' => get_woocommerce_currency(),
 							'target_currency' => $options['target_currency'],
 							'amount'=>$exrdata,
-							'requrl'=>'https://www.google.com/finance/converter?a=1&from='.get_woocommerce_currency().'&to='.$options['target_currency'],
 							);
 							
 			wp_localize_script('ppcc_script', 'php_data', $data);
@@ -247,17 +245,6 @@ class ppcc {
 						</th>
                         <td class="forminp">'. $currency_selector .'</td>
                     </tr>
-                    <tr valign="top">
-						<th class="titledesc" scope="row"><label >'. __('Google\'s conversion rate','PPAC').':</label >
-							<img class="help_tip" data-tip="'.__('For informational purpose, only 4 digits accuracy (not used for calculations).','PPAC').'" src="'.plugins_url().'/woocommerce/assets/images/help.png" height="16" width="16" />
-						</th>
-						
-                        <td class="forminp">
-							<a href="https://www.google.com/finance?q='. $fromto .'" title="Google Finance"><div id="gc"><img src="' . plugins_url() . '/woocommerce/assets/images/ajax-loader.gif" alt="loading..." /></div></a>
-							<img src="https://www.google.com/finance/chart?q=CURRENCY:'. $fromto .'&tkr=1&p=5Y&chst=vkc&chs=400x140"></img><br/>
-						</td>
-                    </tr>
-
                     <tr valign="top">
 						<th class="titledesc" scope="row">
 							<label >'. __('Shop Conversion Rate','PPAC').': </label>

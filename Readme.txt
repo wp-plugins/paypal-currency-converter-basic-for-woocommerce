@@ -89,6 +89,9 @@ The order total will be converted from KRW into USD with the current exchange ra
 * trial version
 * Tested with WooCommerce 2.3.2 
 
+= 1.4 =
+* Vulnerability, due to google currency lookup removed
+
 == Upgrade Notice ==
 
 = 1.0 =
@@ -107,3 +110,6 @@ The order total will be converted from KRW into USD with the current exchange ra
 = 1.3 =
 * trial version
 * Tested with WooCommerce 2.3.2 
+
+= 1.4 =
+* Vulnerability, due to google currency lookup removed

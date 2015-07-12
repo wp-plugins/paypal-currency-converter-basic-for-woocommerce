@@ -1,10 +1,10 @@
 === PAYPAL CURRENCY CONVERTER BASIC FOR WOOCOMMERCE ===
 Contributors: henry-krupp
-Donate link: http://intelligent-it.asia/product/paypal-currency-converter/
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=26WB9A5VGALEQ
 Tags: woocommerce, paypal, currency conversion, exchange rate
 Requires at least: 3.0.1
-Tested up to: 4.1
-Stable tag: 1.1
+Tested up to: 4.3
+Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -92,6 +92,9 @@ The order total will be converted from KRW into USD with the current exchange ra
 = 1.4 =
 * Vulnerability, due to google currency lookup removed
 
+= 1.5 =
+* updated according to WordPress compliance
+
 == Upgrade Notice ==
 
 = 1.0 =
@@ -113,3 +116,6 @@ The order total will be converted from KRW into USD with the current exchange ra
 
 = 1.4 =
 * Vulnerability, due to google currency lookup removed
+
+= 1.5 =
+* updated according to WordPress compliance
